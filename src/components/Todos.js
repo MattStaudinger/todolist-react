@@ -4,8 +4,8 @@ import PropTypes from "prop-types";
 
 export default class Todos extends Component {
 
-  markComplete(e) {
-    this.props.markComplete(e)
+  markComplete(e, id) {
+    this.props.markComplete(e, id)
   }
 
   render() {
@@ -14,7 +14,7 @@ export default class Todos extends Component {
         <h1>Todos</h1>
         {this.props.todos.map(item => (
           <div key={item.id}>
-            <ToDoItem todo={item} markComplete={(e) => this.markComplete(e)}/>
+            <ToDoItem todo={item} markComplete={(e, id) => this.markComplete(e,id)}/>
           </div>
         ))}
       </div>
