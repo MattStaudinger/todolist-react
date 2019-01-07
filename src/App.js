@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import Todos from "./components/Todos";
+import Header from "./components/layout/Header";
+import AddTodo from "./components/AddTodo";
 
 class App extends Component {
   constructor(props) {
@@ -38,13 +40,36 @@ class App extends Component {
     });
   }
 
+  deleteItem(id) {
+    this.setState({
+      todos: this.state.todos.filter(todo => (todo.id === id ? false : true))
+    });
+  }
+
+  addTodo(title) {
+    this.setState({
+      todos: [...this.state.todos, 
+      {
+        id: this.state.todos[this.state.todos.length-1].id + 1,
+        title,
+        completed: false
+      }
+      ]
+    })
+  }
+
   render() {
     return (
       <div className="App">
-        <Todos
-          todos={this.state.todos}
-          markComplete={(e, id) => this.markComplete(e, id)}
-        />
+        <div className="container">
+          <Header />
+          <AddTodo addTodo={(title) => this.addTodo(title)}/>
+          <Todos
+            todos={this.state.todos}
+            markComplete={(e, id) => this.markComplete(e, id)}
+            deleteItem={id => this.deleteItem(id)}
+          />
+        </div>
       </div>
     );
   }
