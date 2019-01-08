@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { BrowserRouter as Router, Route} from 'react-router-dom'
 import "./App.css";
 import Todos from "./components/Todos";
 import Header from "./components/layout/Header";
 import AddTodo from "./components/AddTodo";
+import uuid from 'uuid';
+import About from './components/pages/About'
 
 class App extends Component {
   constructor(props) {
@@ -11,17 +14,17 @@ class App extends Component {
     this.state = {
       todos: [
         {
-          id: 0,
+          id: uuid.v4(),
           title: "Take out the trash",
           completed: false
         },
         {
-          id: 1,
+          id: uuid.v4(),
           title: "Dinner with dog",
           completed: false
         },
         {
-          id: 2,
+          id: uuid.v4(),
           title: "Lunch with mum",
           completed: false
         }
@@ -50,7 +53,7 @@ class App extends Component {
     this.setState({
       todos: [...this.state.todos, 
       {
-        id: this.state.todos[this.state.todos.length-1].id + 1,
+        id: uuid.v4(),
         title,
         completed: false
       }
@@ -60,17 +63,24 @@ class App extends Component {
 
   render() {
     return (
+      <Router>
       <div className="App">
         <div className="container">
           <Header />
-          <AddTodo addTodo={(title) => this.addTodo(title)}/>
-          <Todos
-            todos={this.state.todos}
-            markComplete={(e, id) => this.markComplete(e, id)}
-            deleteItem={id => this.deleteItem(id)}
-          />
+          <Route exact path="/" render={props => (
+            <React.Fragment>
+              <AddTodo addTodo={(title) => this.addTodo(title)}/>
+              <Todos
+                todos={this.state.todos}
+                markComplete={(e, id) => this.markComplete(e, id)}
+                deleteItem={id => this.deleteItem(id)}
+              />
+            </React.Fragment>
+          )} />
+          <Route path="/about" component={About} />
         </div>
       </div>
+      </Router>
     );
   }
 }
