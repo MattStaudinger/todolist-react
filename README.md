@@ -1,3 +1,5 @@
+A simple todo-List-App made with React. Following along the tutorial of Traversy Media
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
