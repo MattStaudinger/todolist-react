@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { BrowserRouter as Router, Route} from 'react-router-dom'
+import axios from 'axios'
 import "./App.css";
 import Todos from "./components/Todos";
 import Header from "./components/layout/Header";
@@ -13,21 +14,6 @@ class App extends Component {
 
     this.state = {
       todos: [
-        {
-          id: uuid.v4(),
-          title: "Take out the trash",
-          completed: false
-        },
-        {
-          id: uuid.v4(),
-          title: "Dinner with dog",
-          completed: false
-        },
-        {
-          id: uuid.v4(),
-          title: "Lunch with mum",
-          completed: false
-        }
       ]
     };
   }
@@ -82,6 +68,15 @@ class App extends Component {
       </div>
       </Router>
     );
+  }
+
+  componentDidMount() {
+    axios.get("https://jsonplaceholder.typicode.com/todos?_limit=10")
+    .then(res => {
+    this.setState({
+      todos: res.data
+    })
+  })
   }
 }
 
